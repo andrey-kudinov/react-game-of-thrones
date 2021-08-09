@@ -1,18 +1,17 @@
 import React, { Component } from "react";
 import "./itemList.css";
-import gotService from "../../services/gotService";
 import Spinner from "../spinner";
 
 export default class ItemList extends Component {
-  gotService = new gotService();
-
   state = {
-    charList: null,
+    itemList: null,
   };
 
   componentDidMount() {
-    this.gotService.getAllCharacters().then((charList) => {
-      this.setState({ charList });
+    const { getData } = this.props;
+
+    getData.then((itemList) => {
+      this.setState({ itemList });
     });
   }
 
@@ -31,13 +30,13 @@ export default class ItemList extends Component {
   }
 
   render() {
-    const { charList } = this.state;
+    const { itemList } = this.state;
 
-    if (!charList) {
+    if (!itemList) {
       return <Spinner />;
     }
 
-    const items = this.renderItems(charList);
+    const items = this.renderItems(itemList);
 
     return <ul>{items}</ul>;
   }

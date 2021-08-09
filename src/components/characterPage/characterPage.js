@@ -4,13 +4,15 @@ import ItemList from "../itemList";
 import CharDetails from "../charDetails";
 import "./characterPage.css";
 import ErrorMessage from "../errorMessage";
+import gotService from "../../services/gotService";
 
 export default class CharacterPage extends Component {
+  gotService = new gotService()
 
   state = {
     selectedChar: 130,
     error: false,
-  }
+  };
 
   componentDidCatch() {
     this.setState({ error: true });
@@ -23,14 +25,17 @@ export default class CharacterPage extends Component {
   };
 
   render() {
-    if(this.state.error) {
-      return <ErrorMessage />
+    if (this.state.error) {
+      return <ErrorMessage />;
     }
 
     return (
       <Row className="blocks">
         <Col md="5" className="block">
-          <ItemList onCharSelected={this.onCharSelected} />
+          <ItemList
+            onCharSelected={this.onCharSelected}
+            getData={this.gotService.getAllCharacters}
+          />
         </Col>
         <Col md="5" className="block block-details">
           <CharDetails charId={this.state.selectedChar} />

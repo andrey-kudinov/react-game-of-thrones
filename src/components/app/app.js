@@ -5,6 +5,8 @@ import ErrorMessage from "../errorMessage";
 import CharacterPage from "../characterPage/characterPage";
 
 import "./app.css";
+import ItemList from "../itemList";
+import CharDetails from "../charDetails";
 
 export default class App extends Component {
   state = {
@@ -27,15 +29,14 @@ export default class App extends Component {
       </Col>
     ) : null;
 
-    if(this.state.error) {
-      return <ErrorMessage />
+    if (this.state.error) {
+      return <ErrorMessage />;
     }
     return (
       <div className="app">
         <Container>{/* <Header /> */}</Container>
         <Container className="content">
           <Row>{character}</Row>
-
           <Row>
             <Button
               color="info"
@@ -45,9 +46,15 @@ export default class App extends Component {
               Hide/show character
             </Button>
           </Row>
-          <CharacterPage/>
-          <CharacterPage/>
-          <CharacterPage/>
+          <CharacterPage />
+          <Row className='blocks'>
+            <Col md="6" className="block">
+              <ItemList onCharSelected={this.onCharSelected} />
+            </Col>
+            <Col md="6" className="block">
+              <CharDetails charId={this.state.selectedChar} />
+            </Col>
+          </Row>
         </Container>
       </div>
     );
