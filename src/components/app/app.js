@@ -1,31 +1,60 @@
-import React from "react";
-import { Col, Row, Container } from "reactstrap";
+import React, { Component } from "react";
+import { Col, Row, Container, Button } from "reactstrap";
+import RandomChar from "../randomChar";
+import ItemList from "../itemList";
+import CharDetails from "../charDetails";
 
-import './app.css';
+import "./app.css";
 
-function App() {
-  return (
-    <div>
-      <Container>
-        {/* <Header /> */}
-      </Container>
-      <Container>
-        <Row>
-          <Col lg={{size: 5, offset: 0}}>
-            {/* <RandomChar /> */}
-          </Col>
-        </Row>
-        <Row>
-          <Col md='6'>
-            {/* <ItemList /> */}
-          </Col>
-          <Col md='6'>
-            {/* <CharDetails /> */}
-          </Col>
-        </Row>
-      </Container>
-    </div>
-  );
+export default class App extends Component {
+  state = {
+    isCharacter: true,
+    selectedChar: null,
+  };
+
+  toggleCharacter = () => {
+    this.setState({ isCharacter: !this.state.isCharacter });
+  };
+
+  onCharSelected = (id) => {
+    console.log(id);
+    this.setState({
+      selectedChar: id,
+    });
+  };
+
+  render() {
+    const character = this.state.isCharacter ? (
+      <Col lg={{ size: 5, offset: 0 }} className="block">
+        <RandomChar />
+      </Col>
+    ) : null;
+    return (
+      <div className="app">
+        <Container>{/* <Header /> */}</Container>
+        <Container className="content">
+          <Row>{character}</Row>
+
+          <Row>
+            <Button
+              color="info"
+              className="button-toggle"
+              onClick={this.toggleCharacter}
+            >
+              Hide/show character
+            </Button>
+          </Row>
+
+          <Row className='blocks'>
+            <Col md="5" className="block">
+              <ItemList onCharSelected={this.onCharSelected} />
+            </Col>
+            <Col md="5" className="block">
+              <CharDetails charId={this.state.selectedChar} />
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    );
+  }
 }
-
-export default App;
