@@ -1,26 +1,23 @@
 import React, { Component } from "react";
 import { Col, Row, Container, Button } from "reactstrap";
 import RandomChar from "../randomChar";
-import ItemList from "../itemList";
-import CharDetails from "../charDetails";
+import ErrorMessage from "../errorMessage";
+import CharacterPage from "../characterPage/characterPage";
 
 import "./app.css";
 
 export default class App extends Component {
   state = {
     isCharacter: true,
-    selectedChar: null,
+    error: false,
   };
+
+  componentDidCatch() {
+    this.setState({ error: true });
+  }
 
   toggleCharacter = () => {
     this.setState({ isCharacter: !this.state.isCharacter });
-  };
-
-  onCharSelected = (id) => {
-    console.log(id);
-    this.setState({
-      selectedChar: id,
-    });
   };
 
   render() {
@@ -29,6 +26,10 @@ export default class App extends Component {
         <RandomChar />
       </Col>
     ) : null;
+
+    if(this.state.error) {
+      return <ErrorMessage />
+    }
     return (
       <div className="app">
         <Container>{/* <Header /> */}</Container>
@@ -44,15 +45,9 @@ export default class App extends Component {
               Hide/show character
             </Button>
           </Row>
-
-          <Row className='blocks'>
-            <Col md="5" className="block">
-              <ItemList onCharSelected={this.onCharSelected} />
-            </Col>
-            <Col md="5" className="block">
-              <CharDetails charId={this.state.selectedChar} />
-            </Col>
-          </Row>
+          <CharacterPage/>
+          <CharacterPage/>
+          <CharacterPage/>
         </Container>
       </div>
     );
