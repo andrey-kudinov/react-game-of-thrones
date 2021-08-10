@@ -4,16 +4,25 @@ import styled from "styled-components";
 import gotService from "../../services/gotService";
 import Spinner from "../spinner";
 import ErrorMessage from "../errorMessage";
+import PropTypes from 'prop-types'
 
 const RandomCharBlock = styled.div`
   /* padding: 20px; */
 `;
 
 export default class RandomChar extends Component {
+  gotService = new gotService();
+  
+  state = {
+    char: {},
+    loading: true,
+    error: false,
+    timerStart: 20,
+  };
   
   componentDidMount() {
     this.updateChar();
-    this.timerId = setInterval(this.updateChar, 20000)
+    this.timerId = setInterval(this.updateChar, this.props.interval)
     this.timerRefresh = setInterval(this.refreshTimer, 1000)
   }
 
@@ -21,15 +30,6 @@ export default class RandomChar extends Component {
     clearInterval(this.timerId)
     clearInterval(this.timerRefresh)
   }
-  
-  gotService = new gotService();
-
-  state = {
-    char: {},
-    loading: true,
-    error: false,
-    timerStart: 20,
-  };
 
   onCharLoaded = (char) => {
     this.setState({ char, loading: false });
@@ -86,3 +86,23 @@ const View = ({ char, timerStart }) => {
     </>
   );
 };
+
+
+RandomChar.defaultProps = {
+  interval: 15000
+}
+
+// RandomChar.propTypes = {
+//   interval: (props, propName, componentName) => {
+//     const value = props[propName];
+
+//     if(typeof value === 'number' && !isNaN(value)) {
+//       return null
+//     }
+//     return new TypeError(`${componentName}: ${propName} must be a number`)
+//   }
+// }
+
+RandomChar.propTypes = {
+  interval: PropTypes.number
+}
