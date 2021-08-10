@@ -1,0 +1,19 @@
+.header {
+  padding: 10px 20px;
+  background-color: black;
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.links {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 10px;
+}
+
+.header a {
+  color: aliceblue;
+  text-decoration: none;
+}

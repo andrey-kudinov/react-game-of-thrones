@@ -42,13 +42,14 @@ export default class GotService {
     return this._transformHouse(house)
   }
 
-  _transformCharacter(char) {
+  _transformCharacter(char, i) {
     return {
-      name: char.name,
-      gender: char.gender,
+      name: char.name || "no data :(",
+      gender: char.gender || "no data :(",
       born: char.born || "no data :(",
       died: char.died || "no data :(",
       culture: char.culture || "no data :(",
+      id: i
     };
   }
 
@@ -58,7 +59,6 @@ export default class GotService {
       region: house.region,
       words: house.words,
       titles: house.titles,
-      overlord: house.overlord,
       ancestralWeapons: house.ancestralWeapons,
     }
   }

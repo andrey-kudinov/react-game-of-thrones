@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import ItemList from "../../itemList";
 import ItemDetails, { Field } from "../../itemDetails";
-import "./characterPage.css";
+import "./housesPage.css";
 import ErrorMessage from "../../errorMessage";
 import gotService from "../../../services/gotService";
 import RowBlock from "../../rowBlock";
 
-export default class CharacterPage extends Component {
+export default class HousesPage extends Component {
   gotService = new gotService();
 
   state = {
@@ -20,7 +20,7 @@ export default class CharacterPage extends Component {
 
   onItemSelected = (id) => {
     this.setState({
-      selectedItem: id + 41,
+      selectedItem: id,
     });
   };
 
@@ -32,21 +32,21 @@ export default class CharacterPage extends Component {
     const itemList = (
       <ItemList
         onItemSelected={this.onItemSelected}
-        getData={this.gotService.getAllCharacters}
-        // renderItem={(item) => `${item.name} (${item.gender})`}
-        renderItem={({ name, gender }) => `${name} (${gender})`}
+        getData={this.gotService.getAllHouses}
+        renderItem={({ name }) => name}
       />
     );
 
     const itemDetails = (
       <ItemDetails
         itemId={this.state.selectedItem}
-        getDetails={this.gotService.getCharacter}
+        getDetails={this.gotService.getHouse}
       >
-        <Field field="gender" label="Gender" />
-        <Field field="born" label="Born" />
-        <Field field="died" label="Died" />
-        <Field field="culture" label="Culture" />
+        <Field field="name" label="Name" />
+        <Field field="words" label="Words" />
+        <Field field="titles" label="Titles" />
+        <Field field="overlord" label="Overlord" />
+        <Field field="ancestralWeapons" label="AncestralWeapons" />
       </ItemDetails>
     );
 

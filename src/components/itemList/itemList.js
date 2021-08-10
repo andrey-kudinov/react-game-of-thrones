@@ -17,15 +17,15 @@ export default class ItemList extends Component {
 
   renderItems(arr) {
     return arr.map((item, i) => {
-      // const { id } = item;
-      // console.log(id);
+      const { id } = item;
+
       const label = this.props.renderItem(item);
 
       return (
         <li
-          key={i}
+          key={id}
           className="item"
-          onClick={() => this.props.onItemSelected(i + 41)}
+          onClick={() => this.props.onItemSelected(id)}
         >
           {label}
         </li>
@@ -39,7 +39,7 @@ export default class ItemList extends Component {
     if (!itemList) {
       return <Spinner />;
     }
-
+    
     const items = this.renderItems(itemList);
 
     return <ul>{items}</ul>;

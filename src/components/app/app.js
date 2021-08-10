@@ -3,11 +3,14 @@ import { Col, Row, Container, Button } from "reactstrap";
 import RandomChar from "../randomChar";
 import ErrorMessage from "../errorMessage";
 import CharacterPage from "../pages/characterPage/characterPage";
+import HousesPage from "../pages/housesPage/housesPage";
+import BooksPage from "../pages/booksPage/booksPage";
 import gotService from "../../services/gotService";
+import BooksItem from "../pages/booksItem/booksItem";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Header from "../header";
 
 import "./app.css";
-import ItemList from "../itemList";
-import CharDetails from "../itemDetails";
 
 export default class App extends Component {
   state = {
@@ -36,48 +39,61 @@ export default class App extends Component {
       return <ErrorMessage />;
     }
     return (
-      <div className="app">
-        <Container>{/* <Header /> */}</Container>
-        <Container className="content">
-          <Row>{character}</Row>
-          <Row>
-            <Button
-              color="info"
-              className="button-toggle"
-              onClick={this.toggleCharacter}
-            >
-              Hide/show character
-            </Button>
-          </Row>
-          <CharacterPage />
+      <Router>
+        <Header />
+        <div className="app">
+          <Container className="content">
+            <Row>{character}</Row>
+            <Row>
+              <Button
+                color="info"
+                className="button-toggle"
+                onClick={this.toggleCharacter}
+              >
+                Hide/show character
+              </Button>
+            </Row>
 
-          <Row className="blocks">
-            <Col md="6" className="block">
-              <ItemList
-                onItemSelected={this.onItemSelected}
-                getData={this.gotService.getAllBooks}
-                renderItem={(item) => item.name}
-              />
-            </Col>
-            <Col md="6" className="block">
-              <CharDetails charId={this.state.selectedChar} />
-            </Col>
-          </Row>
+            <Route path="/characters" component={CharacterPage} />
+            <Route path="/books" exact component={BooksPage} />
+            <Route path="/houses" component={HousesPage} />
 
-          <Row className="blocks">
-            <Col md="6" className="block">
-              <ItemList
-                onItemSelected={this.onItemSelected}
-                getData={this.gotService.getAllHouses}
-                renderItem={(item) => item.name}
-              />
-            </Col>
-            <Col md="6" className="block">
-              <CharDetails charId={this.state.selectedChar} />
-            </Col>
-          </Row>
-        </Container>
-      </div>
+            <Route
+              path="/books/:id"
+              render={({ match }) => {
+                const { id } = match.params;
+                return <BooksItem bookId={id} />;
+              }}
+            />
+
+            {/* <Row className="blocks">
+              <Col md="6" className="block">
+                <ItemList
+                  onItemSelected={this.onItemSelected}
+                  getData={this.gotService.getAllBooks}
+                  renderItem={(item) => item.name}
+                />
+              </Col>
+              <Col md="6" className="block">
+                <CharDetails charId={this.state.selectedChar} />
+              </Col>
+            </Row>
+
+            <Row className="blocks">
+              <Col md="6" className="block">
+                <ItemList
+                  onItemSelected={this.onItemSelected}
+                  getData={this.gotService.getAllHouses}
+                  renderItem={(item) => item.name}
+                />
+              </Col>
+              <Col md="6" className="block">
+                <CharDetails charId={this.state.selectedChar} />
+              </Col>
+            </Row> */}
+          </Container>
+        </div>
+      </Router>
     );
   }
 }
