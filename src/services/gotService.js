@@ -49,26 +49,28 @@ export default class GotService {
       born: char.born || "no data :(",
       died: char.died || "no data :(",
       culture: char.culture || "no data :(",
-      id: i
+      id: i + 41
     };
   }
 
-  _transformHouse(house) {
+  _transformHouse(house, i) {
     return {
       name: house.name,
       region: house.region,
       words: house.words,
       titles: house.titles,
       ancestralWeapons: house.ancestralWeapons,
+      id: i + 1
     }
   }
 
-  _transformBook(book) {
+  _transformBook(book, i) {
     return {
       name: book.name,
       numberOfPages: book.numberOfPages,
       publisher: book.publisher,
       released: book.released,
+      id: i + 1
     }
   }
 }

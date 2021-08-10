@@ -20,7 +20,7 @@ export default class CharacterPage extends Component {
 
   onItemSelected = (id) => {
     this.setState({
-      selectedItem: id + 41,
+      selectedItem: id,
     });
   };
 
