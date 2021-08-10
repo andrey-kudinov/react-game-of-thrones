@@ -10,20 +10,24 @@ export default class ItemList extends Component {
   componentDidMount() {
     const { getData } = this.props;
 
-    getData.then((itemList) => {
+    getData().then((itemList) => {
       this.setState({ itemList });
     });
   }
 
   renderItems(arr) {
-    return arr.map((el, i) => {
+    return arr.map((item, i) => {
+      // const { id } = item;
+      // console.log(id);
+      const label = this.props.renderItem(item);
+
       return (
         <li
           key={i}
           className="item"
-          onClick={() => this.props.onCharSelected(i + 41)}
+          onClick={() => this.props.onItemSelected(i + 41)}
         >
-          {el.name}
+          {label}
         </li>
       );
     });

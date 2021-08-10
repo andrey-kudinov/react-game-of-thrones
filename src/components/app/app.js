@@ -2,17 +2,20 @@ import React, { Component } from "react";
 import { Col, Row, Container, Button } from "reactstrap";
 import RandomChar from "../randomChar";
 import ErrorMessage from "../errorMessage";
-import CharacterPage from "../characterPage/characterPage";
+import CharacterPage from "../pages/characterPage/characterPage";
+import gotService from "../../services/gotService";
 
 import "./app.css";
 import ItemList from "../itemList";
-import CharDetails from "../charDetails";
+import CharDetails from "../itemDetails";
 
 export default class App extends Component {
   state = {
     isCharacter: true,
     error: false,
   };
+
+  gotService = new gotService();
 
   componentDidCatch() {
     this.setState({ error: true });
@@ -47,9 +50,27 @@ export default class App extends Component {
             </Button>
           </Row>
           <CharacterPage />
-          <Row className='blocks'>
+
+          <Row className="blocks">
             <Col md="6" className="block">
-              <ItemList onCharSelected={this.onCharSelected} />
+              <ItemList
+                onItemSelected={this.onItemSelected}
+                getData={this.gotService.getAllBooks}
+                renderItem={(item) => item.name}
+              />
+            </Col>
+            <Col md="6" className="block">
+              <CharDetails charId={this.state.selectedChar} />
+            </Col>
+          </Row>
+
+          <Row className="blocks">
+            <Col md="6" className="block">
+              <ItemList
+                onItemSelected={this.onItemSelected}
+                getData={this.gotService.getAllHouses}
+                renderItem={(item) => item.name}
+              />
             </Col>
             <Col md="6" className="block">
               <CharDetails charId={this.state.selectedChar} />
