@@ -89,7 +89,7 @@ const View = ({ char, timerStart }) => {
 
 
 RandomChar.defaultProps = {
-  interval: 15000
+  interval: 20000
 }
 
 // RandomChar.propTypes = {

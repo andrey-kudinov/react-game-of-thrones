@@ -11,6 +11,7 @@ function ItemList({ getData, onItemSelected, renderItem }) {
     getData().then((data) => {
       updateList(data);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function renderItems(arr) {
